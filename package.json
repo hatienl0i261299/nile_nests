@@ -24,7 +24,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
-    "@nestjs/mapped-types": "*",
+    "@nestjs/mapped-types": "^1.1.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.1.1",
     "reflect-metadata": "^0.1.13",
