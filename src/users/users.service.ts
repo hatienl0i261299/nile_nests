@@ -10,7 +10,7 @@ export class UsersService {
   async user(id: any): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: {
-        id: parseInt(id, 10),
+        id,
       },
       include: {
         posts: true,
@@ -39,7 +39,6 @@ export class UsersService {
   }
 
   async createUser(data: any): Promise<User> {
-    console.log(data);
     return this.prisma.user.create({
       data,
     });
