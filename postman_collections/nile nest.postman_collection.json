@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "71a8e5a9-f783-485e-87f2-e4a7d0a8808c",
+		"name": "nile nest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17075834"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get uses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/users",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"root@gmail.com\",\r\n    \"username\": \"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/users",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"f4da170b-3801-4fc8-8259-bd7d28b4ec9f\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/users",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/users/f4da170b-3801-4fc8-8259-bd7d28b4ec9f",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"users",
+								"f4da170b-3801-4fc8-8259-bd7d28b4ec9f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"root@gmail.com\",\r\n    \"username\": \"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/users/f4da170b-3801-4fc8-8259-bd7d28b4ec9f",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"users",
+								"f4da170b-3801-4fc8-8259-bd7d28b4ec9f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

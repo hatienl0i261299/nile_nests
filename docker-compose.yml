@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: nest_api
     build:
       dockerfile: Dockerfile
       context: .
@@ -19,6 +20,7 @@ services:
     depends_on:
       - postgres
   postgres:
+    container_name: postgres
     image: postgres
     restart: always
     environment:
@@ -29,14 +31,5 @@ services:
       - '5432:5432'
     volumes:
       - docker-nest-postgres:/var/lib/postgresql/data
-  adminer_nest:
-    image: adminer
-    ports:
-      - 5555:8080
-    environment:
-      - ADMINER_DESIGN=mvt
-    logging:
-      driver: "none"
-
 volumes:
   docker-nest-postgres:
