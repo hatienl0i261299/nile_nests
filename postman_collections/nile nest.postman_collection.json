@@ -15,12 +15,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/users",
+							"raw": "{{nest_server}}/users?page=1&pageSize=10",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -111,13 +121,99 @@
 							}
 						},
 						"url": {
-							"raw": "{{nest_server}}/users/f4da170b-3801-4fc8-8259-bd7d28b4ec9f",
+							"raw": "{{nest_server}}/users/833fe787-f2fb-470b-ae57-2b0bbecdfaa2",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users",
-								"f4da170b-3801-4fc8-8259-bd7d28b4ec9f"
+								"833fe787-f2fb-470b-ae57-2b0bbecdfaa2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Get posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/posts/?page=1&pageSize=2",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"posts",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"title1\",\r\n    \"content\": \"cotnent123\",\r\n    \"authorId\": \"833fe787-f2fb-470b-ae57-2b0bbecdfaa2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/posts",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update post by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"title1_+new\",\r\n    \"content\": \"cotnent123 new\",\r\n    \"authorId\": \"fd46e65f-c7e5-48b5-8f42-bf49de6108b8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/posts/1c330d47-4368-4d1e-93c2-7c8721d3ec89",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"posts",
+								"1c330d47-4368-4d1e-93c2-7c8721d3ec89"
 							]
 						}
 					},

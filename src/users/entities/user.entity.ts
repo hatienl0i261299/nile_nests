@@ -1,24 +1,13 @@
-import { Exclude, Expose } from 'class-transformer';
-import { formatDatetime } from 'src/common/utils';
+import { Expose } from 'class-transformer';
+import { Entity } from 'src/common/entity';
+import * as _ from 'lodash';
 
-export class UserEntity {
+export class UserEntity extends Entity {
   id: string;
-  email: string;
-  username: string;
-  createdAt: string;
-  updatedAt: string;
+  posts: any[];
 
-  @Expose({ name: 'createdAt' })
-  get created() {
-    return formatDatetime(new Date(this.createdAt));
-  }
-
-  @Expose({ name: 'updatedAt' })
-  get updated() {
-    return formatDatetime(new Date(this.updatedAt));
-  }
-
-  constructor(partial: Partial<UserEntity>) {
-    Object.assign(this, partial);
+  @Expose({ name: 'posts' })
+  get getPosts() {
+    return _.map(this.posts, (post) => new Entity(post));
   }
 }
