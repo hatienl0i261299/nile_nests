@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdatePostDto } from '../posts/dto/update-post.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as _ from 'lodash';
+import { pagination } from 'src/common/pagination';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async user(id: string): Promise<User | null> {
+  async user(id: string) {
     return this.prisma.user.findUnique({
       where: {
         id,
@@ -27,9 +28,9 @@ export class UsersService {
     cursor?: Prisma.UserWhereUniqueInput;
     where?: Prisma.UserWhereInput;
     orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
+  }) {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       skip,
       take,
       cursor,
@@ -39,15 +40,21 @@ export class UsersService {
         posts: true,
       },
     });
+    return pagination(
+      _.map(users, (user) => new UserEntity(user)),
+      await this.prisma.user.count(),
+      take,
+      skip / take + 1,
+    );
   }
 
-  async createUser(data: CreateUserDto): Promise<User> {
+  async createUser(data: CreateUserDto) {
     return this.prisma.user.create({
       data,
     });
   }
 
-  async updateUser(id: string, data: UpdateUserDto): Promise<User> {
+  async updateUser(id: string, data: UpdateUserDto) {
     return this.prisma.user.update({
       data,
       where: {
@@ -56,7 +63,7 @@ export class UsersService {
     });
   }
 
-  async deleteUser(userIds: string[]): Promise<User> {
+  async deleteUser(userIds: string[]) {
     return this.prisma.user.deleteMany({
       where: {
         id: {

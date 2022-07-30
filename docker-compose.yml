@@ -1,24 +1,24 @@
 services:
-  api:
-    container_name: nest_api
-    build:
-      dockerfile: Dockerfile
-      context: .
-      # Only will build development stage from our dockerfile
-      target: development
-    volumes:
-      - .:/usr/src/app
-      - ./usr/src/app/node_modules
-    env_file:
-      - .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
-    # Run a command against the development stage of the image
-    command: npm run start:dev
-    ports:
-      - 8888:8888
-    depends_on:
-      - postgres
+#  api:
+#    container_name: nest_api
+#    build:
+#      dockerfile: Dockerfile
+#      context: .
+#      # Only will build development stage from our dockerfile
+#      target: development
+#    volumes:
+#      - .:/usr/src/app
+#      - ./usr/src/app/node_modules
+#    env_file:
+#      - .env
+#    environment:
+#      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+#    # Run a command against the development stage of the image
+#    command: npm run start:dev
+#    ports:
+#      - 8888:8888
+#    depends_on:
+#      - postgres
   postgres:
     container_name: postgres
     image: postgres
@@ -31,5 +31,14 @@ services:
       - '5432:5432'
     volumes:
       - docker-nest-postgres:/var/lib/postgresql/data
+  adminer_nest:
+    container_name: adminer_nest
+    image: adminer
+    ports:
+      - 5555:8080
+    environment:
+      - ADMINER_DESIGN=mvt
+    logging:
+      driver: "none"
 volumes:
   docker-nest-postgres:

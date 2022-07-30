@@ -1,11 +1,22 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DEFAULT_PAGE_SIZE } from '../../common/constant';
 import { FindUsersDto } from './dto/find-users.dto';
 
 @Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -16,16 +27,14 @@ export class UsersController {
 
   @Get()
   findAll(@Query() data: FindUsersDto) {
-    console.log(data);
-    // {
-    //   take: data.pageSize,
-    //     skip: data.pageSize * data.page,
-    // }
-    const page = parseInt(data.page, 10);
+    const page = parseInt(data.page, 10) - 1;
     const pageSize = parseInt(data.pageSize, 10);
     return this.usersService.users({
       take: pageSize,
       skip: page * pageSize,
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
   }
 
@@ -41,6 +50,7 @@ export class UsersController {
 
   @Patch(':id')
   updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    updateUserDto.updatedAt = new Date();
     return this.usersService.updateUser(id, updateUserDto);
   }
 }
