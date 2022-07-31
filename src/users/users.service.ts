@@ -1,23 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
-import { UserEntity } from './entities/user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import * as _ from 'lodash';
 import { pagination } from 'src/common/pagination';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { PrismaService } from 'src/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async user(id: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findUniqueOrThrow({
       where: {
         id,
       },
       include: {
         posts: true,
+      },
+    });
+  }
+
+  async findUserByUsername(username: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        username: username,
       },
     });
   }
@@ -49,18 +58,22 @@ export class UsersService {
   }
 
   async createUser(data: CreateUserDto) {
-    return this.prisma.user.create({
+    data.password = await bcrypt.hash('root', await bcrypt.genSaltSync(10));
+    const user = await this.prisma.user.create({
       data,
     });
+    return new UserEntity(user);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
-    return this.prisma.user.update({
+    data.updatedAt = new Date();
+    const user = await this.prisma.user.update({
       data,
       where: {
         id,
       },
     });
+    return new UserEntity(user);
   }
 
   async deleteUser(userIds: string[]) {

@@ -14,7 +14,7 @@ export class Entity {
     return formatDatetime(new Date(this.updatedAt));
   }
 
-  constructor(partial: any[]) {
+  constructor(partial: any) {
     Object.assign(this, partial);
   }
 }

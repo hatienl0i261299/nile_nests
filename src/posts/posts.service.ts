@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
 import { pagination } from 'src/common/pagination';
 import * as _ from 'lodash';
 import { PostEntity } from 'src/posts/entities/post.entity';
+import { PrismaService } from 'src/prisma.service';
+import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
 
 @Injectable()
 export class PostsService {

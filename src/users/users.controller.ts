@@ -8,15 +8,19 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { FindUsersDto } from './dto/find-users.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { FindUsersDto } from 'src/users/dto/find-users.dto';
+import { UsersService } from 'src/users/users.service';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { DEFAULT_PAGE_SIZE } from 'src/common/constant';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -27,8 +31,10 @@ export class UsersController {
 
   @Get()
   findAll(@Query() data: FindUsersDto) {
-    const page = parseInt(data.page, 10) - 1;
-    const pageSize = parseInt(data.pageSize, 10);
+    let page = parseInt(data.page, 10) - 1;
+    let pageSize = parseInt(data.pageSize, 10);
+    if (!page) page = 0;
+    if (!pageSize) pageSize = DEFAULT_PAGE_SIZE;
     return this.usersService.users({
       take: pageSize,
       skip: page * pageSize,
@@ -50,7 +56,6 @@ export class UsersController {
 
   @Patch(':id')
   updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    updateUserDto.updatedAt = new Date();
     return this.usersService.updateUser(id, updateUserDto);
   }
 }

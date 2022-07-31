@@ -1,4 +1,4 @@
 export class FindUsersDto {
-  page: string;
-  pageSize: string;
+  page?: string;
+  pageSize?: string;
 }

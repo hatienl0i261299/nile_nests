@@ -8,16 +8,19 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { PostsService } from './posts.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { FindPostsDto } from 'src/posts/dto/find-posts.dto';
 import { DEFAULT_PAGE_SIZE } from 'src/common/constant';
+import { AuthGuard } from '@nestjs/passport';
+import { CreatePostDto } from 'src/posts/dto/create-post.dto';
+import { PostsService } from 'src/posts/posts.service';
+import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
 
 @Controller('posts')
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(AuthGuard('jwt'))
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -28,12 +31,10 @@ export class PostsController {
 
   @Get()
   findAll(@Query() data: FindPostsDto) {
-    let page = 0;
-    let pageSize = DEFAULT_PAGE_SIZE;
-    if (data.page && data.pageSize) {
-      page = parseInt(data.page, 10) - 1;
-      pageSize = parseInt(data.pageSize, 10);
-    }
+    let page = parseInt(data.page, 10) - 1;
+    let pageSize = parseInt(data.pageSize, 10);
+    if (!page) page = 0;
+    if (!pageSize) pageSize = DEFAULT_PAGE_SIZE;
     return this.postsService.findAll({
       take: pageSize,
       skip: page * pageSize,

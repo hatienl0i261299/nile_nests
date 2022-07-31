@@ -12,25 +12,25 @@
 				{
 					"name": "Get uses",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/users?page=1&pageSize=10",
+							"raw": "{{nest_server}}/users",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "pageSize",
-									"value": "10"
-								}
 							]
 						}
 					},
@@ -39,11 +39,21 @@
 				{
 					"name": "Create user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"root@gmail.com\",\r\n    \"username\": \"root\"\r\n}",
+							"raw": "{\r\n    \"email\": \"root1@gmail.com\",\r\n    \"username\": \"root1\",\r\n    \"password\": \"root\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,11 +75,21 @@
 				{
 					"name": "Delete users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    \"f4da170b-3801-4fc8-8259-bd7d28b4ec9f\"\r\n]",
+							"raw": "[\r\n    \"64e756cf-dca3-4f45-9aeb-de3075bcb950\"\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,16 +111,26 @@
 				{
 					"name": "Find user by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/users/f4da170b-3801-4fc8-8259-bd7d28b4ec9f",
+							"raw": "{{nest_server}}/users/b70d55b5-2d65-4e30-b0e9-558ac4881752",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users",
-								"f4da170b-3801-4fc8-8259-bd7d28b4ec9f"
+								"b70d55b5-2d65-4e30-b0e9-558ac4881752"
 							]
 						}
 					},
@@ -109,11 +139,21 @@
 				{
 					"name": "Update user by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"root@gmail.com\",\r\n    \"username\": \"root\"\r\n}",
+							"raw": "{\r\n    \"username\": \"rootzxczxczxc\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,13 +161,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{nest_server}}/users/833fe787-f2fb-470b-ae57-2b0bbecdfaa2",
+							"raw": "{{nest_server}}/users/6afd4054-7ff8-436c-9c79-b148959bf2e1",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users",
-								"833fe787-f2fb-470b-ae57-2b0bbecdfaa2"
+								"6afd4054-7ff8-436c-9c79-b148959bf2e1"
 							]
 						}
 					},
@@ -141,10 +181,20 @@
 				{
 					"name": "Get posts",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/posts/?page=1&pageSize=2",
+							"raw": "{{nest_server}}/posts/",
 							"host": [
 								"{{nest_server}}"
 							],
@@ -155,11 +205,13 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "pageSize",
-									"value": "2"
+									"value": "2",
+									"disabled": true
 								}
 							]
 						}
@@ -169,6 +221,16 @@
 				{
 					"name": "Create post",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -195,6 +257,16 @@
 				{
 					"name": "Update post by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -214,6 +286,50 @@
 							"path": [
 								"posts",
 								"1c330d47-4368-4d1e-93c2-7c8721d3ec89"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"root\",\r\n    \"password\": \"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/auth/login",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
