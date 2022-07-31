@@ -29,28 +29,31 @@ export class PostsService {
       orderBy,
       include: {
         author: true,
+        categories: true,
       },
     });
     return pagination(
       _.map(posts, (post) => new PostEntity(post)),
-      await this.prisma.user.count(),
+      await this.prisma.post.count(),
       take,
       skip / take + 1,
     );
   }
 
-  findOne(id: any) {
-    return this.prisma.post.findUnique({
+  async findOne(id: number) {
+    const post = await this.prisma.post.findUnique({
       where: {
         id: id,
       },
       include: {
         author: true,
+        categories: true,
       },
     });
+    return new PostEntity(post);
   }
 
-  update(id: string, data: UpdatePostDto) {
+  update(id: number, data: UpdatePostDto) {
     return this.prisma.post.update({
       data,
       where: {

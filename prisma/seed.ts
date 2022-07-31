@@ -13,13 +13,6 @@ const seedUser = async () => {
       email: 'root@gmail.com',
       username: 'root',
       password: await bcrypt.hash('root', await bcrypt.genSaltSync(10)),
-      posts: {
-        create: {
-          title: faker.name.jobTitle(),
-          content: faker.lorem.lines(),
-          published: true,
-        },
-      },
     },
   });
   for (let i = 0; i <= 150; i++) {
@@ -32,13 +25,6 @@ const seedUser = async () => {
         email: randomEmail,
         username: randomName,
         password: await bcrypt.hash('root', await bcrypt.genSaltSync(10)),
-        posts: {
-          create: {
-            title: faker.name.jobTitle(),
-            content: faker.lorem.lines(),
-            published: true,
-          },
-        },
       },
     });
   }
@@ -47,21 +33,50 @@ const seedUser = async () => {
 const seedPost = async () => {
   console.log('Seeding posts data');
   for (let i = 0; i < 100; i++) {
-    const user = await prisma.user.findMany();
+    const userId = Math.round(Math.random() * 151);
     await prisma.post.create({
       data: {
         title: faker.name.jobTitle(),
         content: faker.lorem.lines(),
         published: true,
-        authorId: user[Math.round(Math.random() * 150)].id,
+        authorId: userId,
       },
     });
   }
 };
 
+const seedCategory = async () => {
+  console.log('Seeding categories data');
+  for (let i = 0; i < 100; i++) {
+    await prisma.category.create({
+      data: {
+        name: faker.music.genre(),
+      },
+    });
+  }
+};
+
+const seedcategoriesOnPosts = async () => {
+  console.log('Seeding categoriesOnPosts data');
+  for (let i = 0; i < 200; i++) {
+    const postId = Math.round(Math.random() * 99);
+    const categoryId = Math.round(Math.random() * 99);
+    try {
+      await prisma.categoriesOnPosts.create({
+        data: {
+          postId,
+          categoryId,
+        },
+      });
+    } catch (e) {}
+  }
+};
+
 async function main() {
   await seedUser();
+  await seedCategory();
   await seedPost();
+  await seedcategoriesOnPosts();
 }
 
 main()

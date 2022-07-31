@@ -45,14 +45,14 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postsService.findOne(id);
+  findOne(@Param('id') id: number) {
+    return this.postsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+  update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
     updatePostDto.updatedAt = new Date();
-    return this.postsService.update(id, updatePostDto);
+    return this.postsService.update(+id, updatePostDto);
   }
 
   @Delete(':id')

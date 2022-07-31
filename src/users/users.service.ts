@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async user(id: string) {
+  async user(id: number) {
     return this.prisma.user.findUniqueOrThrow({
       where: {
         id,
@@ -65,7 +65,7 @@ export class UsersService {
     return new UserEntity(user);
   }
 
-  async updateUser(id: string, data: UpdateUserDto) {
+  async updateUser(id: number, data: UpdateUserDto) {
     data.updatedAt = new Date();
     const user = await this.prisma.user.update({
       data,
@@ -76,7 +76,7 @@ export class UsersService {
     return new UserEntity(user);
   }
 
-  async deleteUser(userIds: string[]) {
+  async deleteUser(userIds: number[]) {
     return this.prisma.user.deleteMany({
       where: {
         id: {
