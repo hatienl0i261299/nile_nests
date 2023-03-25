@@ -16,9 +16,9 @@ export class PostsService {
     async findAll(params: {
         skip?: number;
         take?: number;
-        cursor?: Prisma.UserWhereUniqueInput;
-        where?: Prisma.UserWhereInput;
-        orderBy?: Prisma.UserOrderByWithRelationInput;
+        cursor?: Prisma.PostWhereUniqueInput;
+        where?: Prisma.PostWhereInput;
+        orderBy?: Prisma.PostOrderByWithRelationInput;
     }) {
         const { skip, take, cursor, where, orderBy } = params;
         const posts = await this.prisma.post.findMany({
@@ -29,7 +29,11 @@ export class PostsService {
             orderBy,
             include: {
                 author: true,
-                categories: true
+                categories: {
+                    include: {
+                        category: true
+                    }
+                }
             }
         });
         return pagination(

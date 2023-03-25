@@ -28,6 +28,9 @@ export class PostsController {
             skip: page * pageSize,
             orderBy: {
                 updatedAt: 'desc'
+            },
+            where: {
+                published: true
             }
         });
     }

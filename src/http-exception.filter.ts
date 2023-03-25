@@ -6,11 +6,11 @@ import { BaseExceptionFilter } from '@nestjs/core';
 @Catch()
 export class HttpExceptionFilter extends BaseExceptionFilter {
     catch(exception, host: ArgumentsHost) {
-        console.log(exception);
+        console.log('[ERROR]: ', exception);
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         if (exception.status) {
-            response.status(exception.status).json({
+            return response.status(exception.status).json({
                 ...exception.response
             });
         }
@@ -25,7 +25,7 @@ export class HttpExceptionFilter extends BaseExceptionFilter {
             message = exception;
         }
 
-        response.status(status).json({
+        return response.status(status).json({
             statusCode: status,
             message
         });

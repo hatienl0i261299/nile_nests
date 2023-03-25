@@ -18,8 +18,10 @@ export class AuthService {
                     return rest;
                 }
             }
-        } catch (e) {}
-        throw new UnauthorizedException();
+        } catch (e) {
+            throw new UnauthorizedException();
+        }
+        return null;
     }
 
     async login(user: any) {
