@@ -3,8 +3,8 @@ import { CreateUserDto } from './create-user.dto';
 import { IsEmpty } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  updatedAt?: Date;
+    updatedAt?: Date;
 
-  @IsEmpty()
-  password: string;
+    @IsEmpty()
+    password: string;
 }

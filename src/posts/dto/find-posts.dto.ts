@@ -1,4 +1,4 @@
 export class FindPostsDto {
-  page?: string;
-  pageSize?: string;
+    page?: string;
+    pageSize?: string;
 }
