@@ -50,7 +50,8 @@ const seedCategory = async () => {
     for (let i = 0; i < 100; i++) {
         await prisma.category.create({
             data: {
-                name: faker.music.genre()
+                name: faker.music.genre(),
+                published: [true, false][Math.round(Math.random() * 2)]
             }
         });
     }

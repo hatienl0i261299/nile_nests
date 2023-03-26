@@ -39,19 +39,24 @@ export class UsersService {
         orderBy?: Prisma.UserOrderByWithRelationInput;
     }) {
         const { skip, take, cursor, where, orderBy } = params;
-        const users = await this.prisma.user.findMany({
-            skip,
-            take,
-            cursor,
-            where,
-            orderBy,
-            include: {
-                posts: true
-            }
-        });
+        const [totalEntries, users] = await this.prisma.$transaction([
+            this.prisma.user.count({
+                where
+            }),
+            this.prisma.user.findMany({
+                skip,
+                take,
+                cursor,
+                where,
+                orderBy,
+                include: {
+                    posts: true
+                }
+            })
+        ]);
         return pagination(
             _.map(users, (user) => new UserEntity(user)),
-            await this.prisma.user.count(),
+            totalEntries,
             take,
             skip / take + 1
         );

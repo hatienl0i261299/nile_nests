@@ -21,24 +21,29 @@ export class PostsService {
         orderBy?: Prisma.PostOrderByWithRelationInput;
     }) {
         const { skip, take, cursor, where, orderBy } = params;
-        const posts = await this.prisma.post.findMany({
-            skip,
-            take,
-            cursor,
-            where,
-            orderBy,
-            include: {
-                author: true,
-                categories: {
-                    include: {
-                        category: true
+        const [totalEntries, posts] = await this.prisma.$transaction([
+            this.prisma.post.count({
+                where
+            }),
+            this.prisma.post.findMany({
+                skip,
+                take,
+                cursor,
+                where,
+                orderBy,
+                include: {
+                    author: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
                     }
                 }
-            }
-        });
+            })
+        ]);
         return pagination(
             _.map(posts, (post) => new PostEntity(post)),
-            await this.prisma.post.count(),
+            totalEntries,
             take,
             skip / take + 1
         );
