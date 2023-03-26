@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { pagination } from 'src/common/pagination';
-import * as _ from 'lodash';
 import { PostEntity } from 'src/posts/entities/post.entity';
 import { PrismaService } from 'src/prisma.service';
 import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
@@ -20,17 +19,11 @@ export class PostsService {
         where?: Prisma.PostWhereInput;
         orderBy?: Prisma.PostOrderByWithRelationInput;
     }) {
-        const { skip, take, cursor, where, orderBy } = params;
-        const [totalEntries, posts] = await this.prisma.$transaction([
-            this.prisma.post.count({
-                where
-            }),
-            this.prisma.post.findMany({
-                skip,
-                take,
-                cursor,
-                where,
-                orderBy,
+        return pagination<Prisma.PostDelegate<any>>(
+            this.prisma,
+            this.prisma.post,
+            {
+                ...params,
                 include: {
                     author: true,
                     categories: {
@@ -39,13 +32,8 @@ export class PostsService {
                         }
                     }
                 }
-            })
-        ]);
-        return pagination(
-            _.map(posts, (post) => new PostEntity(post)),
-            totalEntries,
-            take,
-            skip / take + 1
+            },
+            PostEntity
         );
     }
 
@@ -56,7 +44,11 @@ export class PostsService {
             },
             include: {
                 author: true,
-                categories: true
+                categories: {
+                    include: {
+                        category: true
+                    }
+                }
             }
         });
         return new PostEntity(post);
@@ -64,7 +56,10 @@ export class PostsService {
 
     update(id: number, data: UpdatePostDto) {
         return this.prisma.post.update({
-            data,
+            data: {
+                ...data,
+                updatedAt: new Date()
+            },
             where: {
                 id
             }

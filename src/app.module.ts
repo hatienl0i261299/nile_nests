@@ -7,9 +7,10 @@ import { AuthModule } from 'src/auth/auth.module';
 import { PostsModule } from 'src/posts/posts.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from 'src/http-exception.filter';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-    imports: [UsersModule, PostsModule, AuthModule, ConfigModule.forRoot({ isGlobal: true })],
+    imports: [UsersModule, PostsModule, AuthModule, ConfigModule.forRoot({ isGlobal: true }), CategoriesModule],
     controllers: [AppController],
     providers: [
         AppService,

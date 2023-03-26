@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import * as _ from 'lodash';
 import { pagination } from 'src/common/pagination';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -38,27 +37,16 @@ export class UsersService {
         where?: Prisma.UserWhereInput;
         orderBy?: Prisma.UserOrderByWithRelationInput;
     }) {
-        const { skip, take, cursor, where, orderBy } = params;
-        const [totalEntries, users] = await this.prisma.$transaction([
-            this.prisma.user.count({
-                where
-            }),
-            this.prisma.user.findMany({
-                skip,
-                take,
-                cursor,
-                where,
-                orderBy,
+        return pagination<Prisma.UserDelegate<any>>(
+            this.prisma,
+            this.prisma.user,
+            {
+                ...params,
                 include: {
                     posts: true
                 }
-            })
-        ]);
-        return pagination(
-            _.map(users, (user) => new UserEntity(user)),
-            totalEntries,
-            take,
-            skip / take + 1
+            },
+            UserEntity
         );
     }
 
@@ -73,7 +61,10 @@ export class UsersService {
     async updateUser(id: number, data: UpdateUserDto) {
         data.updatedAt = new Date();
         const user = await this.prisma.user.update({
-            data,
+            data: {
+                ...data,
+                updatedAt: new Date()
+            },
             where: {
                 id
             }

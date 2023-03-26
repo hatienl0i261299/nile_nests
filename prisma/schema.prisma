@@ -39,13 +39,15 @@ model Category {
   id    Int                 @id @default(autoincrement())
   name  String
   published Boolean? @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt DateTime @default(now())
   posts CategoriesOnPosts[]
 }
 
 model CategoriesOnPosts {
-  post       Post     @relation(fields: [postId], references: [id])
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId     Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
   assignedAt DateTime @default(now())
 

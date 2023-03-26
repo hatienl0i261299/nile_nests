@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "71a8e5a9-f783-485e-87f2-e4a7d0a8808c",
+		"_postman_id": "4e7c518b-ece7-48dd-9099-a65bddbeeef4",
 		"name": "nile nest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17075834"
@@ -25,12 +25,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/users",
+							"raw": "{{nest_server}}/users?page=2&pageSize=20",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
 							]
 						}
 					},
@@ -194,7 +204,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/posts/",
+							"raw": "{{nest_server}}/posts/?page=1&pageSize=10",
 							"host": [
 								"{{nest_server}}"
 							],
@@ -205,13 +215,11 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1",
-									"disabled": true
+									"value": "1"
 								},
 								{
 									"key": "pageSize",
-									"value": "2",
-									"disabled": true
+									"value": "10"
 								}
 							]
 						}
@@ -290,6 +298,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find post by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/posts/1",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -330,6 +366,185 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Update category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new category name 22222\",\r\n    \"published\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/categories/2",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/categories?page=1&pageSize=20",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find category by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/categories/123123123",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"categories",
+								"123123123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    97\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/categories",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"123\",\r\n    \"published\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/categories",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"categories"
 							]
 						}
 					},
