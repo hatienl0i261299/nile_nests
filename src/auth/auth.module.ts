@@ -12,7 +12,7 @@ import { AuthService } from 'src/auth/auth.service';
         PassportModule,
         JwtModule.register({
             secret: process.env.SECRET_KEY,
-            signOptions: { expiresIn: '4h' }
+            signOptions: { expiresIn: process.env.expiresIn }
         })
     ],
     providers: [AuthService, LocalStrategy, JwtStrategy],

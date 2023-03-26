@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
 }
 
@@ -13,35 +13,35 @@ datasource db {
 
 model User {
   //id   String @id @default(uuid())
-  id    Int  @id @default(autoincrement())
-  email String  @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
   username  String?
   password  String?
-  posts Post[]
-  createdAt  DateTime  @default(now())
+  posts     Post[]
+  createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
 
 model Post {
   //id   String @id @default(uuid())
-  id    Int  @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id         Int                 @id @default(autoincrement())
+  title      String
+  content    String?
+  published  Boolean?            @default(false)
+  author     User?               @relation(fields: [authorId], references: [id])
+  authorId   Int?
   categories CategoriesOnPosts[]
-  createdAt  DateTime  @default(now())
-  updatedAt DateTime @default(now())
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @default(now())
 }
 
 model Category {
-  id    Int                 @id @default(autoincrement())
-  name  String
-  published Boolean? @default(false)
-  createdAt  DateTime  @default(now())
-  updatedAt DateTime @default(now())
-  posts CategoriesOnPosts[]
+  id        Int                 @id @default(autoincrement())
+  name      String
+  published Boolean?            @default(false)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @default(now())
+  posts     CategoriesOnPosts[]
 }
 
 model CategoriesOnPosts {
@@ -52,4 +52,35 @@ model CategoriesOnPosts {
   assignedAt DateTime @default(now())
 
   @@id([postId, categoryId])
+}
+
+model Student {
+  id        String                @id @default(uuid())
+  email     String                @unique
+  name      String
+  phone     String?
+  address   String?
+  gender    String
+  countries CountriesOnStudents[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @default(now())
+}
+
+model Country {
+  id        String                @id @default(uuid())
+  name      String
+  code      String
+  students  CountriesOnStudents[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @default(now())
+}
+
+model CountriesOnStudents {
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId  String
+  country    Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  countryId  String
+  assignedAt DateTime @default(now())
+
+  @@id([studentId, countryId])
 }

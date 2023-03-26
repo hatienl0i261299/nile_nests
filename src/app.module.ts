@@ -8,9 +8,17 @@ import { PostsModule } from 'src/posts/posts.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from 'src/http-exception.filter';
 import { CategoriesModule } from './categories/categories.module';
+import { StudentsModule } from './students/students.module';
 
 @Module({
-    imports: [UsersModule, PostsModule, AuthModule, ConfigModule.forRoot({ isGlobal: true }), CategoriesModule],
+    imports: [
+        UsersModule,
+        PostsModule,
+        AuthModule,
+        ConfigModule.forRoot({ isGlobal: true }),
+        CategoriesModule,
+        StudentsModule
+    ],
     controllers: [AppController],
     providers: [
         AppService,

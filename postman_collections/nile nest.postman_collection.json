@@ -315,13 +315,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nest_server}}/posts/1",
+							"raw": "{{nest_server}}/posts/8",
 							"host": [
 								"{{nest_server}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"8"
 							]
 						}
 					},
@@ -545,6 +545,138 @@
 							],
 							"path": [
 								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Get students",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/students",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find student by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nest_server}}/students/45933235-40e5-45da-8013-0892c1db1bd5",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"students",
+								"45933235-40e5-45da-8013-0892c1db1bd5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete students",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"86ee82ce-36ea-477a-9db6-847d34287638\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/students",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create student",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"6\",\r\n    \"email\": \"email8@gmail.com\",\r\n    \"phone\": \"0932374845\",\r\n    \"address\": \"Ha Noi\",\r\n    \"gender\": \"Male\",\r\n    \"countries\": [\r\n        \"79743a82-b4a5-4951-9c0b-65f7ec249f62\",\r\n        \"95c015ff-44a7-40fa-b392-d982b788fb4e\",\r\n        \"dadbede3-95f9-45ed-b3e6-cec0e758477b\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nest_server}}/students",
+							"host": [
+								"{{nest_server}}"
+							],
+							"path": [
+								"students"
 							]
 						}
 					},

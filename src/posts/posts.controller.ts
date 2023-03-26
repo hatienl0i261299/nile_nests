@@ -1,4 +1,16 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    ClassSerializerInterceptor,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import { FindPostsDto } from 'src/posts/dto/find-posts.dto';
 import { DEFAULT_PAGE_SIZE } from 'src/common/constant';
 import { AuthGuard } from '@nestjs/passport';

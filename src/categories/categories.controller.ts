@@ -1,4 +1,16 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    ClassSerializerInterceptor,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CategoriesService } from 'src/categories/categories.service';
 import { UpdateCategoryDto } from 'src/categories/dto/update-category.dto';
